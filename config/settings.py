@@ -128,6 +128,9 @@ ACCOUNT_USERNAME_REQUIRED = False  # username 필드 제거
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # "none"|"optional"|"mandatory"
+ACCOUNT_FORMS = {
+    "signup": "accounts.forms.CustomSignupForm",
+}
 
 # 로그인/로그아웃 이후 이동 경로
 LOGIN_REDIRECT_URL = "/"

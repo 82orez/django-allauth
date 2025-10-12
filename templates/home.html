@@ -3,8 +3,8 @@
   <body>
     <h1>홈</h1>
     {% if user.is_authenticated %}
-      <p>Hello, {{ user.email }}</p>
-      <a href="{% url 'account_logout' %}">로그아웃</a>
+    <p>Hello, {{ user.name|default:user.email }}</p>
+    <a href="{% url 'account_logout' %}">로그아웃</a>
     {% else %}
     <p><a href="{% url 'account_login' %}">로그인</a> | <a href="{% url 'account_signup' %}">회원가입</a></p>
     {% endif %}
