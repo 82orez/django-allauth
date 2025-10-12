@@ -1,0 +1,18 @@
+{% load i18n %}
+<!doctype html>
+<html lang="ko">
+  <body>
+    <h1>{% trans "로그인" %}</h1>
+    <form method="post" action="{% url 'account_login' %}">
+      {% csrf_token %} {{ form.non_field_errors }}
+      <label>이메일</label>
+      {{ form.login }}
+      <label>비밀번호</label>
+      {{ form.password }}
+      <label> {{ form.remember }} 기억하기 </label>
+      <button type="submit">로그인</button>
+    </form>
+    <p><a href="{% url 'account_signup' %}">회원가입</a></p>
+    <p><a href="{% url 'account_reset_password' %}">비밀번호 재설정</a></p>
+  </body>
+</html>
