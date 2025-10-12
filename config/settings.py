@@ -121,6 +121,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # 이메일을 아이디로 쓰는 allauth 설정
+# allauth가 User에 username 필드가 없음을 알도록 설정
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_AUTHENTICATION_METHOD = "email"  # 이메일로 로그인
 ACCOUNT_USERNAME_REQUIRED = False  # username 필드 제거
 ACCOUNT_EMAIL_REQUIRED = True

@@ -1,0 +1,114 @@
+{% load i18n %}
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>{% trans "회원가입" %}</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    /* 최소한의 가독성만 위한 베이직 스타일 (프레임워크 미사용) */
+    body { font-family: system-ui, -apple-system, Arial, sans-serif; line-height: 1.5; margin: 24px; }
+    .container { max-width: 520px; margin: 0 auto; }
+    .field { margin: 12px 0; }
+    .field label { display: block; font-weight: 600; margin-bottom: 6px; }
+    .help { font-size: 0.9em; color: #555; }
+    .errors { color: #b00020; margin: 8px 0; }
+    .non-field-errors { background: #fff2f2; border: 1px solid #f3c2c2; padding: 10px; margin: 12px 0; }
+    input[type="email"], input[type="text"], input[type="password"] { width: 100%; padding: 10px; box-sizing: border-box; }
+    button { padding: 10px 14px; cursor: pointer; }
+    .actions { margin-top: 16px; }
+    .links { margin-top: 16px; }
+    .note { background: #f7f7f7; padding: 10px; border: 1px solid #e5e5e5; margin-top: 12px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>{% trans "회원가입" %}</h1>
+
+  {# 폼 전역 오류(예: 비밀번호 정책 위반 등) #}
+  {% if form.non_field_errors %}
+    <div class="non-field-errors">
+      {{ form.non_field_errors }}
+    </div>
+  {% endif %}
+
+  <form method="post" action="{% url 'account_signup' %}">
+    {% csrf_token %}
+
+    {# 이메일(로그인 식별자) #}
+    <div class="field">
+      <label for="id_email">{% trans "이메일" %}</label>
+      {{ form.email }}
+      {% if form.email.errors %}
+        <div class="errors">{{ form.email.errors }}</div>
+      {% endif %}
+      <div class="help">{% trans "로그인 및 인증에 사용할 이메일 주소를 입력하세요." %}</div>
+    </div>
+
+    {# 비밀번호1 #}
+    <div class="field">
+      <label for="id_password1">{% trans "비밀번호" %}</label>
+      {{ form.password1 }}
+      {% if form.password1.errors %}
+        <div class="errors">{{ form.password1.errors }}</div>
+      {% endif %}
+    </div>
+
+    {# 비밀번호2(확인) #}
+    <div class="field">
+      <label for="id_password2">{% trans "비밀번호 확인" %}</label>
+      {{ form.password2 }}
+      {% if form.password2.errors %}
+        <div class="errors">{{ form.password2.errors }}</div>
+      {% endif %}
+      <div class="help">{% trans "같은 비밀번호를 한 번 더 입력해 주세요." %}</div>
+    </div>
+
+    {# 추가 커스텀 필드(예: name, 약관 동의 등)가 폼에 정의된 경우 자동 출력 #}
+    {% for field in form %}
+      {% if field.name not in "email password1 password2" %}
+        <div class="field">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}
+            <div class="help">{{ field.help_text }}</div>
+          {% endif %}
+          {% if field.errors %}
+            <div class="errors">{{ field.errors }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    {# 리다이렉트 파라미터 지원(다른 페이지에서 넘어온 경우) #}
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+    {% endif %}
+
+    <div class="actions">
+      <button type="submit">{% trans "회원가입" %}</button>
+    </div>
+
+    <div class="note">
+      {% trans "회원가입 후 인증 메일이 발송됩니다. 받은편지함과 스팸함을 모두 확인해 주세요." %}
+    </div>
+  </form>
+
+  <div class="links">
+    <div>
+      {% trans "이미 계정이 있으신가요?" %}
+      <a href="{% url 'account_login' %}">{% trans "로그인" %}</a>
+    </div>
+    <div>
+      {% trans "비밀번호를 잊으셨나요?" %}
+      <a href="{% url 'account_reset_password' %}">{% trans "비밀번호 재설정" %}</a>
+    </div>
+    <div>
+      {% trans "인증 메일을 받지 못하셨나요?" %}
+      {# 이메일 관리/재전송: allauth의 이메일 관리 뷰로 이동하여 인증 메일 재전송 가능 #}
+      <a href="{% url 'account_email' %}">{% trans "이메일 관리(인증 메일 재전송)" %}</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
