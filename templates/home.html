@@ -2,9 +2,11 @@
 <html lang="ko">
   <body>
     <h1>홈</h1>
-    <p>
-      <a href="{% url 'account_login' %}">로그인</a> | <a href="{% url 'account_signup' %}">회원가입</a> |
+    {% if user.is_authenticated %}
+      <p>Hello, {{ user.email }}</p>
       <a href="{% url 'account_logout' %}">로그아웃</a>
-    </p>
+    {% else %}
+    <p><a href="{% url 'account_login' %}">로그인</a> | <a href="{% url 'account_signup' %}">회원가입</a></p>
+    {% endif %}
   </body>
 </html>
