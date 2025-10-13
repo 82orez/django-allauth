@@ -131,7 +131,7 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # "none"|"optional"|"mandatory"
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
-PASSWORD_RESET_TIMEOUT=600
+PASSWORD_RESET_TIMEOUT = 600
 ACCOUNT_FORMS = {
     "signup": "accounts.forms.CustomSignupForm",
 }
@@ -141,8 +141,13 @@ LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
 # 개발용 이메일(콘솔로 확인). 운영에선 SMTP로 교체
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-DEFAULT_FROM_EMAIL = "noreply@example.com"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.resend.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "resend"
+EMAIL_HOST_PASSWORD = "re_drT4mJQs_56MgYLi5Rkfj9rH9YWiwhUzL"
+DEFAULT_FROM_EMAIL = "Django Allauth <noreply@supaneer.com>"
 
 
 # Internationalization
