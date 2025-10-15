@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -141,13 +143,16 @@ LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
 # 개발용 이메일(콘솔로 확인). 운영에선 SMTP로 교체
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.resend.com"
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "resend"
-EMAIL_HOST_PASSWORD = "re_drT4mJQs_56MgYLi5Rkfj9rH9YWiwhUzL"
-DEFAULT_FROM_EMAIL = "Django Allauth <noreply@supaneer.com>"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "noreply@example.com"
+
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "smtp.resend.com"
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = "resend"
+# EMAIL_HOST_PASSWORD = config("RESEND_API_KEY")
+# DEFAULT_FROM_EMAIL = "Django Allauth <noreply@supaneer.com>"
 
 
 # Internationalization
