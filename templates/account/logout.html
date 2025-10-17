@@ -1,0 +1,128 @@
+{% load i18n %}
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>{% trans "로그아웃" %}</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+      /* 최소한의 가독성만 위한 베이직 스타일 (프레임워크 미사용) */
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          Arial,
+          sans-serif;
+        line-height: 1.5;
+        margin: 24px;
+      }
+      .container {
+        max-width: 520px;
+        margin: 0 auto;
+      }
+      .field {
+        margin: 12px 0;
+      }
+      .field label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      .help {
+        font-size: 0.9em;
+        color: #555;
+      }
+      .errors {
+        color: #b00020;
+        margin: 8px 0;
+      }
+      .non-field-errors {
+        background: #fff2f2;
+        border: 1px solid #f3c2c2;
+        padding: 10px;
+        margin: 12px 0;
+      }
+      input[type="email"],
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      button {
+        padding: 10px 14px;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: #1976d2;
+        color: white;
+        border: 1px solid #1976d2;
+      }
+      .btn-secondary {
+        background: #f5f5f5;
+        color: #333;
+        border: 1px solid #ccc;
+      }
+      .actions {
+        margin-top: 16px;
+        display: flex;
+        gap: 8px;
+      }
+      .links {
+        margin-top: 16px;
+      }
+      .note {
+        background: #f7f7f7;
+        padding: 10px;
+        border: 1px solid #e5e5e5;
+        margin-top: 12px;
+      }
+      .logout-message {
+        background: #e8f5e8;
+        padding: 16px;
+        border: 1px solid #c8e6c8;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>{% trans "로그아웃" %}</h1>
+
+      <div class="logout-message">
+        <p>{% trans "정말로 로그아웃 하시겠습니까?" %}</p>
+      </div>
+
+      <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %} {# 리다이렉트 파라미터 지원 #} {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+
+        <div class="actions">
+          <button type="submit" class="btn-primary">{% trans "로그아웃" %}</button>
+          <a
+            href="{% url 'home' %}"
+            class="btn-secondary"
+            style="text-decoration: none; display: inline-block; padding: 10px 14px; text-align: center"
+          >
+            {% trans "취소" %}
+          </a>
+        </div>
+      </form>
+
+      <div class="note">
+        <p>{% trans "로그아웃 후에도 언제든지 다시 로그인할 수 있습니다." %}</p>
+      </div>
+
+      <div class="links">
+        <div>
+          <a href="{% url 'account_login' %}">{% trans "로그인" %}</a>
+        </div>
+        <div>
+          <a href="{% url 'account_signup' %}">{% trans "회원가입" %}</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
